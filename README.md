@@ -12,7 +12,7 @@ It's a cut-down version of [circuit-lempa-homelab](https://github.com/conn3xorg/
 
 ```hcl
 module "homelab" {
-  source = "github.com/conn3xorg/circuit-mini-homelab?ref=v0.1.0"
+  source = "github.com/conn3xorg/circuit-mini-homelab?ref=v0.1.1"
 
   hosts                = { lab = "192.168.1.20" }
   ssh_private_key_file = "~/.ssh/id_ed25519"
