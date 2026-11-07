@@ -66,12 +66,23 @@ jobs:
           # Podman in the host container needs a rootful, privileged container.
           PODMAN: sudo podman
         run: ./up.sh
-      - name: Apply, then plan again with no changes
+      # Install with the last release first, then apply this checkout over
+      # it, as anyone moving to a new release does.
+      - name: Apply the previous release, v0.1.0
         working-directory: examples/local
         run: |
+          sed -i 's|source = "../.."|source = "github.com/conn3xorg/circuit-mini-homelab?ref=v0.1.0"|' main.tf
+          conn3x init
+          conn3x apply -auto-approve
+      - name: Upgrade to this checkout, apply, then plan again with no changes
+        working-directory: examples/local
+        run: |
+          sed -i 's|source = "github.com/conn3xorg/circuit-mini-homelab?ref=v0.1.0"|source = "../.."|' main.tf
+          grep -q 'source = "../.."' main.tf
           conn3x init
           conn3x apply -auto-approve
           conn3x plan -detailed-exitcode
+          sudo podman exec -i circuit-mini-homelab bash -s < check.sh
       # Fetches both apps from the host, as the SSH tunnel would: Homepage's
       # page, its tiles and its check on Uptime Kuma, then Uptime Kuma's page
       # and socket.io.
