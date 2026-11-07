@@ -20,6 +20,13 @@ retry() {
 
 get() { curl -sSf --max-time 10 "http://127.0.0.1:$1$2"; }
 
+# The Debian and Ubuntu test images come without curl.
+command -v curl >/dev/null || if command -v apt-get >/dev/null; then
+  apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -y -qq curl >/dev/null
+else
+  dnf -y -q install curl
+fi
+
 echo "The login message says what runs here."
 for line in "$title, set up by Conn3x." "Homepage     http://127.0.0.1:3000" "Uptime Kuma  http://127.0.0.1:3001"; do
   grep -qF "$line" /etc/motd || { echo "/etc/motd lacks: $line" >&2; cat /etc/motd >&2; exit 1; }
