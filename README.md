@@ -2,7 +2,7 @@
 
 [![Conn3x grade](https://conn3x.org/circuits/mini-homelab/grade.svg)](https://conn3x.org/circuits/mini-homelab/grade)
 
-A Conn3x circuit that runs Homepage and Uptime Kuma on one server. Homepage gives you a page of tiles, one for Uptime Kuma with a dot that goes red when it stops answering, and one for every link you add. Uptime Kuma watches whatever else you point it at. Both listen on `127.0.0.1`, so nothing new faces your network, and you reach them through an SSH tunnel.
+This circuit is for anyone setting up a homelab server who wants a dashboard and uptime monitoring without exposing anything to the network. It runs Homepage and Uptime Kuma on one server, bound to 127.0.0.1, and you reach both through an SSH tunnel. Homepage gives you a page of tiles, including one for Uptime Kuma with a dot that goes red when a service stops answering, and Uptime Kuma watches whatever else you point it at.
 
 It's small on purpose. This is the circuit you build line by line in part 2 of [Build a private AI box, step by step](https://docs.conn3x.org/tutorials/private-ai-box#part-2-make-your-own-circuit): two official circuits and one step of its own, short enough to read before you run it as root.
 
